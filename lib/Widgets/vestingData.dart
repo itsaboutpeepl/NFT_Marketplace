@@ -14,89 +14,91 @@ class VestingData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Header(connectWallet: homeController.connect),
-        Padding(
-          padding: const EdgeInsets.only(left: 38.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CustomText(text: 'Your Schedule Id'),
-                  CustomText(
-                    text: '0x######',
-                    color: textColorBlack,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CustomText(text: 'Vested Amount'),
-                  CustomText(
-                    text: '##### PPL (£####)',
-                    color: textColorBlack,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CustomText(text: 'Fully Vested'),
-                  CustomText(
-                    text: '##### Days',
-                    color: Colors.black,
-                  ),
-                  CustomText2(
-                    text: 'YYYY-MM-DD',
-                    color: textColorGrey,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CustomText(text: 'Withdrawable Amount'),
-                  CustomText(
-                    text: '##### PPL (£####)',
-                    color: textColorBlack,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CustomText(text: 'Withdrawal Available in'),
-                  CustomText(
-                    text: '##### Days',
-                    color: textColorBlack,
-                  ),
-                  CustomText2(
-                    text: 'YYYY-MM-DD',
-                    color: textColorGrey,
-                  ),
-                ],
-              ),
-            ],
+    return Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Header(connectWallet: homeController.connect),
+          Padding(
+            padding: const EdgeInsets.only(left: 38.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    CustomText(text: 'Your Schedule Id'),
+                    CustomText(
+                      text: '0x######',
+                      color: textColorBlack,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    CustomText(text: 'Vested Amount'),
+                    CustomText(
+                      text: '##### PPL (£####)',
+                      color: textColorBlack,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    CustomText(text: 'Fully Vested'),
+                    CustomText(
+                      text: '##### Days',
+                      color: Colors.black,
+                    ),
+                    CustomText2(
+                      text: 'YYYY-MM-DD',
+                      color: textColorGrey,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    CustomText(text: 'Withdrawable Amount'),
+                    CustomText(
+                      text: '##### PPL (£####)',
+                      color: textColorBlack,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    CustomText(text: 'Withdrawal Available in'),
+                    CustomText(
+                      text: '##### Days',
+                      color: textColorBlack,
+                    ),
+                    CustomText2(
+                      text: 'YYYY-MM-DD',
+                      color: textColorGrey,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

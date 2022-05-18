@@ -8,9 +8,9 @@ class HomeController extends GetxController {
 
   bool get isInOperatingChain => currentChain == OPERATING_CHAIN;
 
-  bool get isConnected => isEnabled && currentAddress.isNotEmpty;
+  bool get isConnected => isEnabled && currentAddress.value.isNotEmpty;
 
-  String currentAddress = '';
+  final currentAddress = ''.obs;
   String displayAddress = '';
 
   int currentChain = -1;
@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   connect() async {
     if (isEnabled) {
       final accs = await ethereum!.requestAccount();
-      if (accs.isNotEmpty) currentAddress = accs.first;
+      if (accs.isNotEmpty) currentAddress.value = accs.first;
       if (accs.isNotEmpty) {
         displayAddress =
             accs.first.substring(0, 5) + "..." + accs.first.substring(37, 41);
@@ -32,7 +32,7 @@ class HomeController extends GetxController {
   }
 
   clear() {
-    currentAddress = '';
+    currentAddress.value = '';
     displayAddress = '';
     currentChain = -1;
     update();

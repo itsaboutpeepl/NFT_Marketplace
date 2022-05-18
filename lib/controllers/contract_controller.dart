@@ -70,7 +70,7 @@ class ContractController extends GetxController {
   getVestingSchedulesCountByBeneficiary() async {
     final BigInt response = await vestingContract.call<BigInt>(
         'getVestingSchedulesCountByBeneficiary',
-        [Get.find<HomeController>().currentAddress]);
+        [Get.find<HomeController>().currentAddress.value]);
 
     scheduleCount = response.toInt();
     update();
@@ -161,7 +161,7 @@ class ContractController extends GetxController {
   getSchedulesInfo() async {
     try {
       final List<String> lists = await getUserVestingSchedulesList(
-          1, Get.find<HomeController>().currentAddress);
+          1, Get.find<HomeController>().currentAddress.value);
 
       scheduleIDs = List.from(lists);
       displayScheduleID = scheduleIDs[0].substring(0, 5) +
