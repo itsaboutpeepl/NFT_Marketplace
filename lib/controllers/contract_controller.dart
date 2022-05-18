@@ -28,7 +28,7 @@ class ContractController extends GetxController {
 
   Contract? tokenVesting;
 
-  var amountReleasable;
+  dynamic amountReleasable = 0.obs;
 
   BigInt withdrawableAmount = BigInt.zero;
 
@@ -60,6 +60,9 @@ class ContractController extends GetxController {
   @override
   void onInit() {
     init();
+    interval(amountReleasable, (_) {
+      print("Doing");
+    }, time: const Duration(seconds: 5));
     super.onInit();
   }
 //   //Contract Methods
@@ -172,6 +175,7 @@ class ContractController extends GetxController {
 
       update();
     }
+
     // await computeAmountReleasable(BigInt.parse(scheduleIDs[0]));
   }
 
