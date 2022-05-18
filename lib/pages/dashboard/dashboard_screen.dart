@@ -79,17 +79,16 @@ class DashboardScreen extends StatelessWidget {
                                     children: [
                                       const CustomText(
                                           text: 'Your Schedule Id'),
-                                      Get.find<ContractController>().isLoading
+                                      contractController.isLoading.value
                                           ? const CircularProgressIndicator(
                                               color: Colors.red,
                                             )
                                           : CustomText(
-                                              text: Get.find<ContractController>()
+                                              text: contractController
                                                           .vestedChecker <=
                                                       0
                                                   ? 'No Vesting Schedule Detected'
-                                                  : Get.find<
-                                                          ContractController>()
+                                                  : contractController
                                                       .displayScheduleID,
                                               color: textColorBlack,
                                             ),
@@ -103,16 +102,16 @@ class DashboardScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const CustomText(text: 'Vested Amount'),
-                                      Get.find<ContractController>().isLoading
+                                      contractController.isLoading.value
                                           ? const CircularProgressIndicator(
                                               color: Colors.red,
                                             )
                                           : CustomText(
-                                              text: Get.find<ContractController>()
+                                              text: contractController
                                                           .vestedChecker <
                                                       1
                                                   ? '0 PPL (£####)'
-                                                  : '${Get.find<ContractController>().vestedTotal} PPL (£####)',
+                                                  : '${contractController.vestedTotal} PPL (£####)',
                                               color: textColorBlack,
                                             ),
                                     ],
@@ -125,19 +124,19 @@ class DashboardScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const CustomText(text: 'Fully Vested'),
-                                      Get.find<ContractController>().isLoading
+                                      contractController.isLoading.value
                                           ? const CircularProgressIndicator(
                                               color: Colors.red,
                                             )
                                           : CustomText(
-                                              text: Get.find<ContractController>()
+                                              text: contractController
                                                           .endTimeChecker <
                                                       1
                                                   ? '0 Days'
-                                                  : '${Get.find<ContractController>().endTimeDays} Days',
+                                                  : '${contractController.endTimeDays} Days',
                                               color: Colors.black,
                                             ),
-                                      Get.find<ContractController>().isLoading
+                                      contractController.isLoading.value
                                           ? const CircularProgressIndicator(
                                               color: Colors.red,
                                             )
@@ -177,7 +176,7 @@ class DashboardScreen extends StatelessWidget {
                                     children: [
                                       const CustomText(
                                           text: 'Withdrawal Available in'),
-                                      contractController.isLoading
+                                      contractController.isLoading.value
                                           ? const CircularProgressIndicator(
                                               color: Colors.red,
                                             )
@@ -245,7 +244,7 @@ class DashboardScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     const CustomText(text: 'Your Schedule Id'),
-                                    Get.find<ContractController>().isLoading
+                                    contractController.isLoading.value
                                         ? const CircularProgressIndicator(
                                             color: Colors.red,
                                           )
@@ -266,7 +265,7 @@ class DashboardScreen extends StatelessWidget {
                                 Column(
                                   children: [
                                     const CustomText(text: 'Vested Amount'),
-                                    contractController.isLoading
+                                    contractController.isLoading.value
                                         ? const CircularProgressIndicator(
                                             color: Colors.red,
                                           )
@@ -284,7 +283,7 @@ class DashboardScreen extends StatelessWidget {
                                   children: [
                                     const CustomText(text: 'Fully Vested'),
                                     Container(
-                                      child: contractController.isLoading
+                                      child: contractController.isLoading.value
                                           ? const CircularProgressIndicator(
                                               color: Colors.red,
                                             )
@@ -297,7 +296,7 @@ class DashboardScreen extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                     ),
-                                    contractController.isLoading
+                                    contractController.isLoading.value
                                         ? const CircularProgressIndicator(
                                             color: Colors.red,
                                           )
@@ -315,7 +314,7 @@ class DashboardScreen extends StatelessWidget {
                                   children: [
                                     const CustomText(
                                         text: 'Withdrawable Amount'),
-                                    contractController.isLoading
+                                    contractController.isLoading.value
                                         ? const CircularProgressIndicator(
                                             color: Colors.red,
                                           )
@@ -330,7 +329,7 @@ class DashboardScreen extends StatelessWidget {
                                   children: [
                                     const CustomText(
                                         text: 'Withdrawal Available in'),
-                                    contractController.isLoading
+                                    contractController.isLoading.value
                                         ? const CircularProgressIndicator(
                                             color: Colors.red,
                                           )
@@ -342,25 +341,23 @@ class DashboardScreen extends StatelessWidget {
                                                 : '${contractController.cliffEndDays} Days',
                                             color: textColorBlack,
                                           ),
-                                    contractController.isLoading
+                                    contractController.isLoading.value
                                         ? const CircularProgressIndicator(
                                             color: Colors.red,
                                           )
                                         : CustomText2(
-                                            text: Get.find<ContractController>()
-                                                .cliff,
+                                            text: contractController.cliff,
                                             color: textColorGrey,
                                           ),
                                   ],
                                 ),
                               ],
                             ),
-                            if (Get.find<ContractController>().isTime >= 0 &&
-                                Get.find<ContractController>().vestedChecker >
-                                    0)
+                            if (contractController.isTime >= 0 &&
+                                contractController.vestedChecker > 0)
                               InkWell(
                                 onTap: () {
-                                  Get.find<ContractController>().release();
+                                  contractController.release();
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(

@@ -48,7 +48,9 @@ class ContractController extends GetxController {
   var vestedTotal;
   bool revoked = true;
   int isTime = -1;
-  bool isLoading = false;
+  var isLoading = true.obs;
+  //TODO: helps fetch amountReleasable, edit to be production level
+  var trust = 0.obs;
 
   List<String> scheduleIDs = [];
   List<String> scheduleIDdropdown = [];
@@ -60,9 +62,11 @@ class ContractController extends GetxController {
   @override
   void onInit() {
     init();
-    interval(amountReleasable, (_) {
-      print("Doing");
-    }, time: const Duration(seconds: 5));
+
+    interval(trust, (_) {
+      print('Hi');
+      getSchedulesInfo();
+    }, time: const Duration(seconds: 2));
     super.onInit();
   }
 //   //Contract Methods
@@ -70,7 +74,7 @@ class ContractController extends GetxController {
   getVestingSchedulesCountByBeneficiary() async {
     final BigInt response = await vestingContract.call<BigInt>(
         'getVestingSchedulesCountByBeneficiary',
-        [Get.find<HomeController>().currentAddress.value]);
+        [homeController.currentAddress.value]);
 
     scheduleCount = response.toInt();
     update();
@@ -138,10 +142,12 @@ class ContractController extends GetxController {
   }
 
   getVestingContractInformation() async {
-    isLoading = true;
-    withdrawableAmount =
-        await vestingContract.call<BigInt>('getWithdrawableAmount');
-
+    try {
+      withdrawableAmount =
+          await vestingContract.call<BigInt>('getWithdrawableAmount');
+    } catch (error) {
+      print(error);
+    } finally {}
     update();
   }
 
@@ -161,7 +167,7 @@ class ContractController extends GetxController {
   getSchedulesInfo() async {
     try {
       final List<String> lists = await getUserVestingSchedulesList(
-          1, Get.find<HomeController>().currentAddress.value);
+          1, homeController.currentAddress.value);
 
       scheduleIDs = List.from(lists);
       displayScheduleID = scheduleIDs[0].substring(0, 5) +
@@ -171,7 +177,8 @@ class ContractController extends GetxController {
       print(error);
     } finally {
       computeAmountReleasable(scheduleIDs[0]);
-      isLoading = false;
+      isLoading(false);
+      trust.value++;
 
       update();
     }
