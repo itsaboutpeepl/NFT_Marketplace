@@ -10,15 +10,15 @@ class ContractController extends GetxController {
   final HomeController homeController = Get.put(HomeController());
 
   String displayScheduleID = '';
-  final vestingContract = Contract('0xfC75C482058d7f521Db493D103247953d5C9d2AF',
+  final vestingContract = Contract('0x4f95788Bc7Ba96337CEf7dbdCC1216Fa672E0051',
       Interface(abi), provider!.getSigner());
 
-  final contractAddress = '0xfC75C482058d7f521Db493D103247953d5C9d2AF';
+  final contractAddress = '0x4f95788Bc7Ba96337CEf7dbdCC1216Fa672E0051';
 
   static const TOKENVESTING_ADDRESS =
-      '0xfC75C482058d7f521Db493D103247953d5C9d2AF';
+      '0x4f95788Bc7Ba96337CEf7dbdCC1216Fa672E0051';
 
-  static const PEEPL_ADDRESS = '0xa2C7CdB72d177f6259cD12a9A06Fdfd9625419D4';
+  static const FEQUITY_ADDRESS = '0xaDA5216B415a38C3Fa8daD6e7fDE5b772605d716';
 
   ContractERC20? testToken;
 
@@ -28,7 +28,7 @@ class ContractController extends GetxController {
 
   Contract? tokenVesting;
 
-  dynamic amountReleasable = 0.obs;
+  var amountReleasable;
 
   BigInt withdrawableAmount = BigInt.zero;
 

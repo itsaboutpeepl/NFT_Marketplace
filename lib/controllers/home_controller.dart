@@ -14,7 +14,7 @@ class HomeController extends GetxController {
   String displayAddress = '';
 
   int currentChain = -1;
-  static const OPERATING_CHAIN = 122;
+  static const OPERATING_CHAIN = 97;
 
   connect() async {
     if (isEnabled) {
