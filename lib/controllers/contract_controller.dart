@@ -28,7 +28,7 @@ class ContractController extends GetxController {
 
   Contract? tokenVesting;
 
-  var amountReleasable;
+  dynamic amountReleasable;
 
   BigInt withdrawableAmount = BigInt.zero;
 
@@ -64,9 +64,8 @@ class ContractController extends GetxController {
     init();
 
     interval(trust, (_) {
-      print('Hi');
       getSchedulesInfo();
-    }, time: const Duration(seconds: 2));
+    }, time: const Duration(seconds: 10));
     super.onInit();
   }
 //   //Contract Methods
@@ -164,7 +163,7 @@ class ContractController extends GetxController {
     }
   }
 
-  getSchedulesInfo() async {
+  Future<void> getSchedulesInfo() async {
     try {
       final List<String> lists = await getUserVestingSchedulesList(
           1, homeController.currentAddress.value);
@@ -176,7 +175,7 @@ class ContractController extends GetxController {
     } catch (error) {
       print(error);
     } finally {
-      computeAmountReleasable(scheduleIDs[0]);
+      await computeAmountReleasable(scheduleIDs[0]);
       isLoading(false);
       trust.value++;
 

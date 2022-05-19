@@ -29,19 +29,11 @@ class DashboardScreen extends StatelessWidget {
           var text = '';
 
           if (homeController.isConnected && homeController.isInOperatingChain) {
-            // h.getVestingContractInformation();
-            // h.getVestingSchedulesCountByBeneficiary();
-
-            // h.getScheduleByAddressAndIndex(0, h.currentAddress);
-
-            // h.getSchedulesInfo();
-
-            contractController.getVestingContractInformation();
-
-            contractController.getVestingSchedulesCountByBeneficiary();
             contractController.getScheduleByAddressAndIndex(
                 0, homeController.currentAddress.value);
             contractController.getSchedulesInfo();
+            contractController.getVestingContractInformation();
+            contractController.getVestingSchedulesCountByBeneficiary();
 
             text = 'Connected';
           } else if (homeController.isConnected &&
