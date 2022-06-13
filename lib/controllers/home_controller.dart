@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   RxBool isLoading = false.obs;
 
   int currentChain = -1;
-  static const OPERATING_CHAIN = 97;
+  static const OPERATING_CHAIN = 122;
 
   Future<bool> connect() async {
     if (isEnabled) {
@@ -28,7 +28,7 @@ class HomeController extends GetxController {
       if (accs.isNotEmpty) currentAddress.value = accs.first;
 
       if (accs.isNotEmpty) {
-        displayAddress.value = accs.first.substring(0, 5) + "..." + accs.first.substring(37, 41);
+        displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
       }
       currentChain = await ethereum!.getChainId();
 
