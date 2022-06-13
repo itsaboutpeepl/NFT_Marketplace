@@ -42,7 +42,7 @@ class ContractController extends GetxController {
 
   List<String> scheduleIDs = [];
 
-  RxString currentScheduleID = "".obs;
+  RxString currentScheduleID = "No Vesting Schedule".obs;
 
   RxBool isRevoked = true.obs;
 
@@ -67,7 +67,7 @@ class ContractController extends GetxController {
       currentAmountReleasable(toDecimal(await computeAmountReleasable(scheduleIDs[0]), 18));
 
       isLoading = false;
-      currentScheduleID(scheduleIDs[0].substring(0, 5) + "..." + scheduleIDs[0].substring(61, 66));
+      currentScheduleID("${scheduleIDs[0].substring(0, 5)}...${scheduleIDs[0].substring(61, 66)}");
 
       isContractFullyVested = DateTime.now().compareTo(scheduleEnd.value) > 0 ? true : false;
 
