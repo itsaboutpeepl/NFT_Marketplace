@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nftapp/Widgets/customText.dart';
 import 'package:nftapp/constants/style.dart';
+import 'package:nftapp/controllers/contract_controller.dart';
+import 'package:nftapp/controllers/home_controller.dart';
 import 'package:nftapp/helpers/responsiveness.dart';
 
-class Header extends StatefulWidget {
-  final String? walletState;
-  final VoidCallback connectWallet;
-  const Header({Key? key, this.walletState, required this.connectWallet})
-      : super(key: key);
+class Header extends StatelessWidget {
+  const Header({Key? key}) : super(key: key);
 
-  @override
-  State<Header> createState() => _HeaderState();
-}
-
-class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,49 +20,62 @@ class _HeaderState extends State<Header> {
           height: 150,
         ),
         SizedBox(
-          width: !ResponsiveWidget.isSmallScreen(context)
-              ? itemPadding + 80
-              : itemPadding - 80,
+          width: !ResponsiveWidget.isSmallScreen(context) ? itemPadding + 80 : itemPadding - 80,
         ),
-        ConnectWallet(
-          text: widget.walletState,
-          connectWallet: widget.connectWallet,
-        ),
+        ConnectWallet(),
       ],
     );
   }
 }
 
-class ConnectWallet extends StatefulWidget {
-  final String? text;
-  final VoidCallback connectWallet;
-  const ConnectWallet({Key? key, this.text, required this.connectWallet})
-      : super(key: key);
+class ConnectWallet extends StatelessWidget {
+  ConnectWallet({Key? key}) : super(key: key);
 
-  @override
-  State<ConnectWallet> createState() => _ConnectWalletState();
-}
+  final HomeController homeController = Get.put(HomeController());
+  final ContractController contractController = Get.put(ContractController());
 
-class _ConnectWalletState extends State<ConnectWallet> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.connectWallet,
-      child: Container(
-        padding: const EdgeInsets.all(defaultPadding * 0.75),
-        decoration: const BoxDecoration(
-          color: callToAction,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
+      onTap: () {
+        homeController.connect().then((value) async {
+          if (homeController.isInOperatingChain) {
+            final hasVested = await contractController.getUserVestingCount(homeController.currentAddress.value);
+            // print(hasVested);
+            if (hasVested != BigInt.zero) {
+              contractController.getScheduleByAddressAndIndex(
+                  index: 0, beneficaryAddress: homeController.currentAddress.value);
+            }
+          }
+
+          homeController.isLoading(false);
+        });
+      },
+      child: Obx(
+        () => Container(
+          padding: const EdgeInsets.all(defaultPadding * 0.75),
+          decoration: BoxDecoration(
+            color: homeController.isLoading.value ? textColorBlack : callToAction,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-          child: CustomText(
-            text: widget.text == null ? 'Connect Wallet' : "${widget.text}",
-            color: Colors.white,
-            size: 18,
-          ),
+          child: homeController.isLoading.value
+              ? const CircularProgressIndicator(
+                  color: callToAction,
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+                  child: Obx(() {
+                    return CustomText(
+                      text: homeController.displayAddress.value.isEmpty
+                          ? "Connect Wallet"
+                          : homeController.displayAddress.value,
+                      color: Colors.white,
+                      size: 18,
+                    );
+                  }),
+                ),
         ),
       ),
     );

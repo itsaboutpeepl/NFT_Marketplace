@@ -7,15 +7,12 @@ class CustomText extends StatelessWidget {
   final Color? color;
   final FontWeight? weight;
 
-  const CustomText({required this.text, this.size, this.color, this.weight});
+  const CustomText({Key? key, required this.text, this.size, this.color, this.weight}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-          fontSize: size ?? 30,
-          color: color ?? callToAction,
-          fontWeight: weight ?? FontWeight.normal),
+      style: TextStyle(fontSize: size ?? 30, color: color ?? callToAction, fontWeight: weight ?? FontWeight.normal),
     );
   }
 }
@@ -26,15 +23,12 @@ class CustomText2 extends StatelessWidget {
   final Color? color;
   final FontWeight? weight;
 
-  const CustomText2({required this.text, this.size, this.color, this.weight});
+  const CustomText2({Key? key, required this.text, this.size, this.color, this.weight}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-          fontSize: size ?? 30,
-          color: color ?? callToAction,
-          fontWeight: weight ?? FontWeight.normal),
+      style: TextStyle(fontSize: size ?? 30, color: color ?? callToAction, fontWeight: weight ?? FontWeight.normal),
     );
   }
 }

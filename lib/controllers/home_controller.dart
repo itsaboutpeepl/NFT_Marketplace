@@ -4,41 +4,49 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   static HomeController instance = Get.find();
 
-  bool get isEnabled => ethereum != null;
+  bool get isEnabled => ethereum != null; //isEnabled means if metamask is enabled
 
-  bool get isInOperatingChain => currentChain == OPERATING_CHAIN;
+  bool get isInOperatingChain =>
+      currentChain == OPERATING_CHAIN; //if the operating chain is the same as the chain of the current wallet
 
-  bool get isConnected => isEnabled && currentAddress.isNotEmpty;
+  bool get isConnected => isEnabled && currentAddress.value.isNotEmpty; //if enabled plus current address is not null.
 
-  String currentAddress = '';
-  String displayAddress = '';
+  final walletConnect = false.obs;
+
+  final Rx<String> currentAddress = ''.obs;
+  final Rx<String> displayAddress = ''.obs;
+
+  RxBool isLoading = false.obs;
 
   int currentChain = -1;
-  static const OPERATING_CHAIN = 122;
+  static const OPERATING_CHAIN = 97;
 
-  connect() async {
+  Future<bool> connect() async {
     if (isEnabled) {
+      isLoading(true);
       final accs = await ethereum!.requestAccount();
-      if (accs.isNotEmpty) currentAddress = accs.first;
-      if (accs.isNotEmpty) {
-        displayAddress =
-            accs.first.substring(0, 5) + "..." + accs.first.substring(37, 41);
-      }
+      if (accs.isNotEmpty) currentAddress.value = accs.first;
 
+      if (accs.isNotEmpty) {
+        displayAddress.value = accs.first.substring(0, 5) + "..." + accs.first.substring(37, 41);
+      }
       currentChain = await ethereum!.getChainId();
 
+      walletConnect(true);
       update();
     }
+    return Future.value(true);
   }
 
-  clear() {
-    currentAddress = '';
-    displayAddress = '';
+  void clear() {
+    currentAddress.value = '';
+    displayAddress.value = '';
     currentChain = -1;
     update();
   }
 
-  init() {
+  @override
+  void onInit() {
     if (isEnabled) {
       ethereum!.onAccountsChanged((accs) {
         clear();
@@ -48,11 +56,6 @@ class HomeController extends GetxController {
         clear();
       });
     }
-  }
-
-  @override
-  void onInit() {
-    init();
     super.onInit();
   }
 }
