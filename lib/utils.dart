@@ -28,7 +28,7 @@ Decimal toDecimal(BigInt amount, [int decimals = 18]) {
   Decimal baseUnit = Decimal.fromInt(10).pow(decimals);
 
   var d = Decimal.parse(amount.toString());
-  d = (d / baseUnit) as Decimal;
+  var result = d / baseUnit;
 
-  return d;
+  return result.toDecimal();
 }

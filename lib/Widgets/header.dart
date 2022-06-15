@@ -41,7 +41,7 @@ class ConnectWallet extends StatelessWidget {
         homeController.connect().then((value) async {
           if (homeController.isInOperatingChain) {
             final hasVested = await contractController.getUserVestingCount(homeController.currentAddress.value);
-            // print(hasVested);
+            print(hasVested);
             if (hasVested != BigInt.zero) {
               contractController.getScheduleByAddressAndIndex(
                   index: 0, beneficaryAddress: homeController.currentAddress.value);
