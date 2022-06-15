@@ -55,6 +55,7 @@ class ContractController extends GetxController {
   @override
   onInit() {
     interval(incrementer, (_) => getSchedulesInfo(), time: const Duration(seconds: 10));
+
     super.onInit();
   }
 
@@ -86,7 +87,6 @@ class ContractController extends GetxController {
     await getSchedulesInfo();
 
     final schedule = await vestingContract.call('getVestingScheduleByAddressAndIndex', [beneficaryAddress, index]);
-    print(schedule);
     isRevoked(schedule[9]);
 
     scheduleStart = readTimeStampToDate(
