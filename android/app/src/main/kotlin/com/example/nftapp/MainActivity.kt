@@ -1,4 +1,4 @@
-package com.example.nftapp
+package com.example.peeplDapp
 
 import io.flutter.embedding.android.FlutterActivity
 

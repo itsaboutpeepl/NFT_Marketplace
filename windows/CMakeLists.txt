@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(nftapp LANGUAGES CXX)
+project(peeplDapp LANGUAGES CXX)
 
-set(BINARY_NAME "nftapp")
+set(BINARY_NAME "peeplDapp")
 
 cmake_policy(SET CMP0063 NEW)
 

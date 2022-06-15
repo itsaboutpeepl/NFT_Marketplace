@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nftapp/Widgets/large_screen.dart';
+import 'package:peeplDapp/Widgets/large_screen.dart';
 
-import 'package:nftapp/Widgets/small_screen.dart';
+import 'package:peeplDapp/Widgets/small_screen.dart';
 
-import 'package:nftapp/helpers/responsiveness.dart';
+import 'package:peeplDapp/helpers/responsiveness.dart';
 
 class SiteLayout extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();

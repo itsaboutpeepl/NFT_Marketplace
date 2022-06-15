@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nftapp/constants/controllers.dart';
+import 'package:peeplDapp/constants/controllers.dart';
 
-import 'package:nftapp/routing/router.dart';
-import 'package:nftapp/routing/routes.dart';
+import 'package:peeplDapp/routing/router.dart';
+import 'package:peeplDapp/routing/routes.dart';
 
 Navigator localNavigator() => Navigator(
       key: navigationController.navigationKey,

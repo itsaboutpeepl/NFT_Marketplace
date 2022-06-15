@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nftapp">
+    package="com.example.peeplDapp">
    <application
-        android:label="nftapp"
+        android:label="peeplDapp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

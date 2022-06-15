@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nftapp/Widgets/customText.dart';
-import 'package:nftapp/Widgets/header.dart';
-import 'package:nftapp/constants/style.dart';
-import 'package:nftapp/controllers/contract_controller.dart';
-import 'package:nftapp/controllers/home_controller.dart';
-import 'package:nftapp/helpers/dateTimeFormat.dart';
+import 'package:peeplDapp/Widgets/customText.dart';
+import 'package:peeplDapp/Widgets/header.dart';
+import 'package:peeplDapp/constants/style.dart';
+import 'package:peeplDapp/controllers/contract_controller.dart';
+import 'package:peeplDapp/controllers/home_controller.dart';
+import 'package:peeplDapp/helpers/dateTimeFormat.dart';
 
 class SmallHomePage extends StatelessWidget {
   SmallHomePage({Key? key}) : super(key: key);

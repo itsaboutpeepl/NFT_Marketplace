@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nftapp/Widgets/customText.dart';
-import 'package:nftapp/Widgets/large_home_page.dart';
-import 'package:nftapp/Widgets/small_home_page.dart';
-import 'package:nftapp/controllers/home_controller.dart';
+import 'package:peeplDapp/Widgets/customText.dart';
+import 'package:peeplDapp/Widgets/large_home_page.dart';
+import 'package:peeplDapp/Widgets/small_home_page.dart';
+import 'package:peeplDapp/controllers/home_controller.dart';
 
-import 'package:nftapp/helpers/responsiveness.dart';
+import 'package:peeplDapp/helpers/responsiveness.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nftapp/Widgets/no_transition_web.dart';
-import 'package:nftapp/constants/style.dart';
-import 'package:nftapp/controllers/home_controller.dart';
-import 'package:nftapp/controllers/navigation_controller.dart';
-import 'package:nftapp/pages/404/error_page.dart';
-import 'package:nftapp/routing/routes.dart';
+import 'package:peeplDapp/Widgets/no_transition_web.dart';
+import 'package:peeplDapp/constants/style.dart';
+import 'package:peeplDapp/controllers/home_controller.dart';
+import 'package:peeplDapp/controllers/navigation_controller.dart';
+import 'package:peeplDapp/pages/404/error_page.dart';
+import 'package:peeplDapp/routing/routes.dart';
 
 import 'pages/layout.dart';
 import 'package:google_fonts/google_fonts.dart';

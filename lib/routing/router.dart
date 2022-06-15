@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:nftapp/pages/dashboard/dashboard_screen.dart';
+import 'package:peeplDapp/pages/dashboard/dashboard_screen.dart';
 
-import 'package:nftapp/routing/routes.dart';
+import 'package:peeplDapp/routing/routes.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case overviewPageRoute:
-      return _getPageRoute(DashboardScreen());
+      return _getPageRoute(const DashboardScreen());
 
     default:
-      return _getPageRoute(DashboardScreen());
+      return _getPageRoute(const DashboardScreen());
   }
 }
 

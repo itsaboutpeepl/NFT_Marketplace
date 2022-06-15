@@ -1,13 +1,13 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:get/get.dart';
-import 'package:nftapp/constants/addresses.dart';
-import 'package:nftapp/controllers/home_controller.dart';
+import 'package:peeplDapp/constants/addresses.dart';
+import 'package:peeplDapp/controllers/home_controller.dart';
 
-import 'package:nftapp/helpers/abi.dart';
-import 'package:nftapp/helpers/dateTimeFormat.dart';
-import 'package:nftapp/helpers/decimal_handler.dart';
-import 'package:nftapp/models/schedules.dart';
+import 'package:peeplDapp/helpers/abi.dart';
+import 'package:peeplDapp/helpers/dateTimeFormat.dart';
+import 'package:peeplDapp/helpers/decimal_handler.dart';
+import 'package:peeplDapp/models/schedules.dart';
 
 class ContractController extends GetxController {
   HomeController homeController = Get.put(HomeController());
