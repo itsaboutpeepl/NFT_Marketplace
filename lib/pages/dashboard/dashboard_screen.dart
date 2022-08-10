@@ -4,7 +4,7 @@ import 'package:peeplDapp/Widgets/customText.dart';
 import 'package:peeplDapp/Widgets/large_home_page.dart';
 import 'package:peeplDapp/Widgets/small_home_page.dart';
 import 'package:peeplDapp/controllers/home_controller.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:peeplDapp/helpers/responsiveness.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -25,7 +25,19 @@ class DashboardScreen extends StatelessWidget {
               return SingleChildScrollView(
                   child: ResponsiveWidget.isSmallScreen(context) ? SmallHomePage() : LargeHomePage());
             } else {
-              return const Center(child: CustomText(text: 'Your browser is not Supported'));
+              return Center(
+                child: InkWell(
+                    child: const Text(
+                      'Click here to find out more about our Dapp',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 30,
+                      ),
+                    ),
+                    onTap: () {
+                      launchUrl(Uri.parse('https://itsaboutpeepl.com/dapp/'));
+                    }),
+              );
             }
           },
         ),
