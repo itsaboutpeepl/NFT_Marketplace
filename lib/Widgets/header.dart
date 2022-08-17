@@ -46,8 +46,6 @@ class ConnectWallet extends StatelessWidget {
                   index: 0, beneficaryAddress: homeController.currentAddress.value);
             }
           }
-
-          homeController.isLoading(false);
         });
       },
       child: Obx(

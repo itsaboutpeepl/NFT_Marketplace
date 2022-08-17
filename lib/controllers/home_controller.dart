@@ -21,24 +21,19 @@ class HomeController extends GetxController {
   int currentChain = -1;
   static const OPERATING_CHAIN = 122;
 
-  // final wc = WalletConnectProvider.fromRpc(
-  //   {122: 'https://rpc.fuse.io'},
-  //   chainId: 122,
-  //   network: 'Fuse',
-  // );
-
   Future<bool> connect() async {
     if (isEnabled) {
       isLoading(true);
       final accs = await ethereum!.requestAccount();
-      if (accs.isNotEmpty) currentAddress.value = accs.first;
-
       if (accs.isNotEmpty) {
+        currentAddress.value = accs.first;
+
         displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
       }
       currentChain = await ethereum!.getChainId();
 
       walletConnect(true);
+      isLoading(false);
       update();
     }
     return Future.value(true);
@@ -52,19 +47,19 @@ class HomeController extends GetxController {
   }
 
   void switchChain() async {
-    await ethereum!.walletSwitchChain(122, () async {
-      await ethereum!.walletAddChain(
-        chainId: 122,
-        chainName: 'Fuse Network',
-        nativeCurrency: CurrencyParams(name: 'FUSE', symbol: 'FUSE', decimals: 18),
-        rpcUrls: ['https://rpc.fuse.io'],
-      );
-    });
+    await ethereum!.walletAddChain(
+      chainId: 122,
+      chainName: 'Fuse Network',
+      nativeCurrency: CurrencyParams(name: 'Fuse', symbol: 'Fuse', decimals: 18),
+      rpcUrls: ['https://rpc.fuse.io'],
+    );
   }
 
   @override
   void onInit() {
     if (isEnabled) {
+      connect();
+
       ethereum!.onAccountsChanged((accs) {
         clear();
       });
