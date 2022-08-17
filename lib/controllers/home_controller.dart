@@ -21,6 +21,12 @@ class HomeController extends GetxController {
   int currentChain = -1;
   static const OPERATING_CHAIN = 122;
 
+  // final wc = WalletConnectProvider.fromRpc(
+  //   {122: 'https://rpc.fuse.io'},
+  //   chainId: 122,
+  //   network: 'Fuse',
+  // );
+
   Future<bool> connect() async {
     if (isEnabled) {
       isLoading(true);
@@ -43,6 +49,17 @@ class HomeController extends GetxController {
     displayAddress.value = '';
     currentChain = -1;
     update();
+  }
+
+  void switchChain() async {
+    await ethereum!.walletSwitchChain(122, () async {
+      await ethereum!.walletAddChain(
+        chainId: 122,
+        chainName: 'Fuse Network',
+        nativeCurrency: CurrencyParams(name: 'FUSE', symbol: 'FUSE', decimals: 18),
+        rpcUrls: ['https://rpc.fuse.io'],
+      );
+    });
   }
 
   @override

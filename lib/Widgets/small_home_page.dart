@@ -159,7 +159,7 @@ class SmallHomePage extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
