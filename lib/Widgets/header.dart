@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peeplDapp/Widgets/customText.dart';
+import 'package:peeplDapp/Widgets/snackbar.dart';
 import 'package:peeplDapp/constants/style.dart';
 import 'package:peeplDapp/controllers/contract_controller.dart';
 import 'package:peeplDapp/controllers/home_controller.dart';
@@ -15,7 +16,7 @@ class Header extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          'assets/images/logo-red.png',
+          'assets/images/0.png',
           width: 150,
           height: 150,
         ),
@@ -45,6 +46,8 @@ class ConnectWallet extends StatelessWidget {
               contractController.getScheduleByAddressAndIndex(
                   index: 0, beneficaryAddress: homeController.currentAddress.value);
             }
+          } else {
+            showErrorSnack(context: context);
           }
         });
       },

@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.0.13
   flutter_inset_box_shadow: ^1.0.7
   url_launcher: ^6.1.5
+  another_flushbar: ^1.10.29
   
   
 

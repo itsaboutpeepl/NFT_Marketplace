@@ -82,56 +82,58 @@ class ContractController extends GetxController {
   }
 
   void getScheduleByAddressAndIndex({required int index, required String beneficaryAddress}) async {
-    isLoading = true;
+    try {
+      await getSchedulesInfo();
 
-    await getSchedulesInfo();
+      final schedule = await vestingContract.call('getVestingScheduleByAddressAndIndex', [beneficaryAddress, index]);
+      isRevoked(schedule[9]);
 
-    final schedule = await vestingContract.call('getVestingScheduleByAddressAndIndex', [beneficaryAddress, index]);
-    isRevoked(schedule[9]);
+      scheduleStart = readTimeStampToDate(
+        int.parse(
+          schedule[3].toString(),
+        ),
+      );
 
-    scheduleStart = readTimeStampToDate(
-      int.parse(
-        schedule[3].toString(),
-      ),
-    );
+      final DateTime scheduleDuration = readTimeStampToDate(
+        int.parse(
+          schedule[4].toString(),
+        ),
+      );
 
-    final DateTime scheduleDuration = readTimeStampToDate(
-      int.parse(
-        schedule[4].toString(),
-      ),
-    );
+      scheduleEnd(DateTime.fromMillisecondsSinceEpoch(
+          scheduleStart.millisecondsSinceEpoch + scheduleDuration.millisecondsSinceEpoch));
 
-    scheduleEnd(DateTime.fromMillisecondsSinceEpoch(
-        scheduleStart.millisecondsSinceEpoch + scheduleDuration.millisecondsSinceEpoch));
+      cliff(readTimeStampToDate(
+        int.parse(
+          schedule[2].toString(),
+        ),
+      ));
 
-    cliff(readTimeStampToDate(
-      int.parse(
-        schedule[2].toString(),
-      ),
-    ));
+      vestedTotal(toDecimal(BigInt.parse(schedule[7].toString()), 18));
 
-    vestedTotal(toDecimal(BigInt.parse(schedule[7].toString()), 18));
+      vestedChecker = vestedTotal.value == Decimal.zero ? false : true;
 
-    vestedChecker = vestedTotal.value == Decimal.zero ? false : true;
+      endTimeDays(daysBetweenInt(DateTime.now(), scheduleEnd.value));
+      cliffEndDays(daysBetweenInt(DateTime.now(), cliff.value));
 
-    endTimeDays(daysBetweenInt(DateTime.now(), scheduleEnd.value));
-    cliffEndDays(daysBetweenInt(DateTime.now(), cliff.value));
+      cliffEndDays.value >= 0 ? cliffEndDays(daysBetweenInt(DateTime.now(), cliff.value)) : cliffEndDays(0);
+      endTimeDays.value >= 0 ? endTimeDays(daysBetweenInt(DateTime.now(), scheduleEnd.value)) : endTimeDays(0);
 
-    cliffEndDays.value >= 0 ? cliffEndDays(daysBetweenInt(DateTime.now(), cliff.value)) : cliffEndDays(0);
-    endTimeDays.value >= 0 ? endTimeDays(daysBetweenInt(DateTime.now(), scheduleEnd.value)) : endTimeDays(0);
+      vestingSchedules.add(Schedules(
+        scheduleID: currentScheduleID.value.toString(),
+        vestedAmount: vestedTotal.value.toString(),
+        fullyVestedDays: endTimeDays.value.toString(),
+        fullyVestedDateTime: dateFormatter(scheduleEnd.value),
+        withdrawableAmount: currentAmountReleasable.value.toString(),
+        cliffEndDays: cliffEndDays.value.toString(),
+        cliffDateTime: dateFormatter(cliff.value),
+        isRevoked: isRevoked.value,
+      ));
 
-    vestingSchedules.add(Schedules(
-      scheduleID: currentScheduleID.value.toString(),
-      vestedAmount: vestedTotal.value.toString(),
-      fullyVestedDays: endTimeDays.value.toString(),
-      fullyVestedDateTime: dateFormatter(scheduleEnd.value),
-      withdrawableAmount: currentAmountReleasable.value.toString(),
-      cliffEndDays: cliffEndDays.value.toString(),
-      cliffDateTime: dateFormatter(cliff.value),
-      isRevoked: isRevoked.value,
-    ));
-
-    update();
+      update();
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<List<String>> getUserVestingSchedulesList() async {

@@ -15,17 +15,9 @@ class DashboardScreen extends StatelessWidget {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (h) => Scaffold(
-        body: Builder(
-          builder: (_) {
-            if (h.isEnabled) {
-              if (h.isConnected && !h.isInOperatingChain) {
-                return const Center(
-                    child: CustomText(text: 'Wrong Chain! Please connect to FUSE Network \nAnd Refresh'));
-              }
-              return SingleChildScrollView(
-                  child: ResponsiveWidget.isSmallScreen(context) ? SmallHomePage() : LargeHomePage());
-            } else {
-              return Center(
+        body: h.isEnabled && h.isConnected
+            ? SingleChildScrollView(child: ResponsiveWidget.isSmallScreen(context) ? SmallHomePage() : LargeHomePage())
+            : Center(
                 child: InkWell(
                     child: const Text(
                       'Click here to find out more about our Dapp',
@@ -37,10 +29,7 @@ class DashboardScreen extends StatelessWidget {
                     onTap: () {
                       launchUrl(Uri.parse('https://itsaboutpeepl.com/dapp/'));
                     }),
-              );
-            }
-          },
-        ),
+              ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 class Schedules {
+  // final String? currentAddress;
   final String? scheduleID;
   final String? vestedAmount;
   final String? fullyVestedDays;
@@ -9,6 +10,7 @@ class Schedules {
   final bool? isRevoked;
 
   Schedules({
+    // required this.currentAddress,
     required this.scheduleID,
     required this.vestedAmount,
     required this.fullyVestedDays,
@@ -19,7 +21,7 @@ class Schedules {
     required this.isRevoked,
   });
 
-  // factory Schedules.fromTuple(List schedule, int index) {
+  // factory Schedules.fromJson(List schedule, int index) {
   //   return Schedules(
   //     scheduleID: schedule[index] ?? 'No Vesting Schedule Found',
   //     vestedAmount: schedule[index] ?? '##### PPL (£####)',
