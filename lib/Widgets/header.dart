@@ -40,6 +40,8 @@ class ConnectWallet extends StatelessWidget {
     return InkWell(
       onTap: () {
         homeController.connect().then((value) async {
+          if (homeController.isLoggedOut) showErrorSnack(context: context, title: 'Please log in to metamask');
+
           if (homeController.isInOperatingChain) {
             final hasVested = await contractController.getUserVestingCount(homeController.currentAddress.value);
             if (hasVested != BigInt.zero) {
@@ -47,7 +49,7 @@ class ConnectWallet extends StatelessWidget {
                   index: 0, beneficaryAddress: homeController.currentAddress.value);
             }
           } else {
-            showErrorSnack(context: context);
+            showErrorSnack(context: context, title: 'Wrong Chain! Please connect to FUSE Network \nAnd Refresh');
           }
         });
       },

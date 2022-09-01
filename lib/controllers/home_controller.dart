@@ -1,5 +1,6 @@
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:get/get.dart';
+import 'package:peeplDapp/Widgets/snackbar.dart';
 
 class HomeController extends GetxController {
   static HomeController instance = Get.find();
@@ -21,11 +22,20 @@ class HomeController extends GetxController {
   int currentChain = -1;
   static const OPERATING_CHAIN = 122;
 
+  bool isLoggedOut = false;
+
   Future<bool> connect() async {
     if (isEnabled) {
       isLoading(true);
-      final accs = await ethereum!.requestAccount();
+
+      final accs = await ethereum!.requestAccount().timeout(Duration(seconds: 5), onTimeout: () {
+        isLoggedOut = true;
+
+        return [];
+      });
+      //TODO:
       if (accs.isNotEmpty) {
+        isLoggedOut = false;
         currentAddress.value = accs.first;
 
         displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
@@ -58,7 +68,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     if (isEnabled) {
-      connect();
+      // connect();
 
       ethereum!.onAccountsChanged((accs) {
         clear();

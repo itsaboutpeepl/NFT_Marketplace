@@ -15,22 +15,22 @@ class DashboardScreen extends StatelessWidget {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (h) => Scaffold(
-        body: h.isEnabled && h.isConnected
-            ? SingleChildScrollView(child: ResponsiveWidget.isSmallScreen(context) ? SmallHomePage() : LargeHomePage())
-            : Center(
-                child: InkWell(
-                    child: const Text(
-                      'Click here to find out more about our Dapp',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 30,
+          body: h.isEnabled
+              ? SingleChildScrollView(
+                  child: ResponsiveWidget.isSmallScreen(context) ? SmallHomePage() : LargeHomePage())
+              : Center(
+                  child: InkWell(
+                      child: const Text(
+                        'Click here to find out more about our Dapp',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 30,
+                        ),
                       ),
-                    ),
-                    onTap: () {
-                      launchUrl(Uri.parse('https://itsaboutpeepl.com/dapp/'));
-                    }),
-              ),
-      ),
+                      onTap: () {
+                        launchUrl(Uri.parse('https://itsaboutpeepl.com/dapp/'));
+                      }),
+                )),
     );
   }
 }

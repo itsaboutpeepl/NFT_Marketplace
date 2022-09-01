@@ -16,9 +16,9 @@ void showErrorSnack({
       ),
     ],
     duration: Duration(seconds: duration),
-    titleText: const Text(
-      'Wrong Chain! Please connect to FUSE Network \nAnd Refresh',
-      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
+    titleText: Text(
+      title ?? '',
+      style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
     ),
     messageText: Text(
       message ?? "Try again later!",
