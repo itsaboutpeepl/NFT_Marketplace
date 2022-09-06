@@ -19,34 +19,44 @@ class HomeController extends GetxController {
 
   RxBool isLoading = false.obs;
 
+  bool onTapEnabled = true;
+
   int currentChain = -1;
   static const OPERATING_CHAIN = 122;
 
   bool isLoggedOut = false;
 
-  Future<bool> connect() async {
-    if (isEnabled) {
-      isLoading(true);
+  List<String> accs = [];
 
-      final accs = await ethereum!.requestAccount().timeout(Duration(seconds: 5), onTimeout: () {
-        isLoggedOut = true;
+  Future<void> connect() async {
+    if (onTapEnabled) {
+      if (isEnabled) {
+        try {
+          isLoading(true);
+          accs = await ethereum!.requestAccount();
+        } catch (e) {
+          if (e == '4001') {
+            isLoading(false);
+          } else if (e == '') {}
+        }
 
-        return [];
-      });
-      //TODO:
-      if (accs.isNotEmpty) {
-        isLoggedOut = false;
-        currentAddress.value = accs.first;
+        if (accs.isNotEmpty) {
+          isLoggedOut = false;
+          currentAddress.value = accs.first;
 
-        displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
+          displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
+          onTapEnabled = false;
+        }
+        currentChain = await ethereum!.getChainId();
+
+        walletConnect(true);
+
+        isLoading(false);
+        update();
       }
-      currentChain = await ethereum!.getChainId();
-
-      walletConnect(true);
-      isLoading(false);
-      update();
+    } else {
+      print('button disabled');
     }
-    return Future.value(true);
   }
 
   void clear() {
@@ -68,16 +78,61 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     if (isEnabled) {
-      // connect();
+      if (ethereum!.isConnected()) {
+        connect();
+      }
 
-      ethereum!.onAccountsChanged((accs) {
-        clear();
+      ethereum!.onAccountsChanged((accs) async {
+        try {
+          isLoading(true);
+          accs = await ethereum!.requestAccount();
+        } catch (e) {
+          if (e == '4001') {
+            isLoading(false);
+          } else if (e == '') {}
+        }
+
+        if (accs.isNotEmpty) {
+          isLoggedOut = false;
+          currentAddress.value = accs.first;
+
+          displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
+          onTapEnabled = false;
+        }
+        currentChain = await ethereum!.getChainId();
+
+        walletConnect(true);
+
+        isLoading(false);
+        update();
       });
 
-      ethereum!.onChainChanged((chain) {
-        clear();
+      ethereum!.onChainChanged((chain) async {
+        try {
+          isLoading(true);
+          accs = await ethereum!.requestAccount();
+        } catch (e) {
+          if (e == '4001') {
+            isLoading(false);
+          } else if (e == '') {}
+        }
+
+        if (accs.isNotEmpty) {
+          isLoggedOut = false;
+          currentAddress.value = accs.first;
+
+          displayAddress.value = "${accs.first.substring(0, 5)}...${accs.first.substring(37, 41)}";
+          onTapEnabled = false;
+        }
+        currentChain = await ethereum!.getChainId();
+
+        walletConnect(true);
+
+        isLoading(false);
+        update();
       });
     }
+
     super.onInit();
   }
 }

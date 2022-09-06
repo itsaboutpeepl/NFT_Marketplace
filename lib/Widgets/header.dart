@@ -29,17 +29,43 @@ class Header extends StatelessWidget {
   }
 }
 
-class ConnectWallet extends StatelessWidget {
+class ConnectWallet extends StatefulWidget {
   ConnectWallet({Key? key}) : super(key: key);
 
+  @override
+  State<ConnectWallet> createState() => _ConnectWalletState();
+}
+
+class _ConnectWalletState extends State<ConnectWallet> {
   final HomeController homeController = Get.put(HomeController());
+
   final ContractController contractController = Get.put(ContractController());
+
+  @override
+  void initState() {
+    if (homeController.isConnected) {
+      if (homeController.isInOperatingChain) {
+        final hasVested = contractController.getUserVestingCount(homeController.currentAddress.value);
+        if (hasVested != BigInt.zero) {
+          contractController.getScheduleByAddressAndIndex(
+              index: 0, beneficaryAddress: homeController.currentAddress.value);
+        }
+      } else {
+        showErrorSnack(context: context, title: 'Wrong Chain! Please connect to FUSE Network \nAnd Refresh');
+      }
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        homeController.connect().then((value) async {
+      onTap: () async {
+        await homeController.connect().then((value) async {
+          if (!homeController.isInOperatingChain) {
+            homeController.switchChain();
+          }
           if (homeController.isLoggedOut) showErrorSnack(context: context, title: 'Please log in to metamask');
 
           if (homeController.isInOperatingChain) {
