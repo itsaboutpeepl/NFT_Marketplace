@@ -33,23 +33,16 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: RootRoute, page: () => SiteLayout()),
       ],
-      title: 'Peepl',
+      title: 'Peepl Vesting',
       theme: ThemeData(
         primaryColor: const Color(0xFF292B5E),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: const Color(0xFFB21EC1),
         ),
-        textTheme:
-            GoogleFonts.bebasNeueTextTheme(Theme.of(context).textTheme.copyWith(
-                  bodyText1: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .apply(color: Colors.white),
-                  bodyText2: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .apply(color: Colors.white),
-                )).apply(),
+        textTheme: GoogleFonts.bebasNeueTextTheme(Theme.of(context).textTheme.copyWith(
+              bodyText1: Theme.of(context).textTheme.bodyText1!.apply(color: Colors.white),
+              bodyText2: Theme.of(context).textTheme.bodyText2!.apply(color: Colors.white),
+            )).apply(),
         scaffoldBackgroundColor: scaffoldColor,
         canvasColor: const Color(0xFF1b162d),
         pageTransitionsTheme: WebTransitions(),
